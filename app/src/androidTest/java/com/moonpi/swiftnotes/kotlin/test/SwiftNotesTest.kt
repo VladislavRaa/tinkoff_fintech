@@ -32,11 +32,12 @@ class SwiftNotesTest : AbstractApplicationTest<SwiftNotes>(SwiftNotes()) {
                 " Надпись ‘Note’") {
             app.clickButtonPlus()
             app.checkDefaultElements()
-            deviceScreenshot("Создание заметки")
+            deviceScreenshot("Экран создания заметки")
         }
-        step("Проверить текст ‘Save changes?’") {
-            app.buttonBack()
-            app.buttonBack()
+        step("Проверить текст ‘Save changes?’\n" +
+                "Проверить наличие двух кнопок ‘NO’, ‘YES’") {
+            app.clickButtonBack()
+            app.clickButtonBack()
             app.checkSaveYesOrNo()
             app.clickButtonNo()
             deviceScreenshot("Диалоговое окно")
@@ -46,5 +47,42 @@ class SwiftNotesTest : AbstractApplicationTest<SwiftNotes>(SwiftNotes()) {
             deviceScreenshot("Стартовый экран")
         }
 
+    }
+
+    @Test
+    @DisplayName("Start case 2")
+    fun case2() {
+        app.open()
+        app.clickButtonPlus()
+        app.inputTitle("Заметка1")
+        app.inputNote("Тестовая запись 1")
+        app.clickButtonBack()
+        //app.checkSaveYesOrNo()
+        //app.clickButtonYes()
+    }
+
+
+    @Test
+    @DisplayName("Start case 3")
+    fun case3() {
+        step("Проверить отображение пунктов меню:\n" +
+                "‘Backup notes’\n" +
+                "‘Restore notes’\n" +
+                "‘Rate app’") {
+            app.open()
+            app.clickMoreOptions()
+            app.checkMainFunc()
+            deviceScreenshot("Стартовый экран")
+            app.clickButtonBack()
+        }
+        step("Нажать кнопку ‘+’") {
+            app.clickButtonPlus()
+            deviceScreenshot("Экран создания заметки")
+        }
+        step("На экране создания заметки нажать на кнопку меню") {
+            app.clickMoreOptions()
+            app.checkEditMenu()
+            deviceScreenshot("Стартовый экран")
+        }
     }
 }

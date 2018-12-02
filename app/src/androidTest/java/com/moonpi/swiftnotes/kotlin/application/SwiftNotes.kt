@@ -2,11 +2,15 @@ package com.moonpi.swiftnotes.kotlin.application
 
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions.click
+import android.support.test.espresso.action.ViewActions.replaceText
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.ViewMatchers.*
 import com.moonpi.swiftnotes.MainActivity
 import com.moonpi.swiftnotes.R
+import com.moonpi.swiftnotes.kotlin.util.byContentDesc
 import com.moonpi.swiftnotes.kotlin.util.getDevice
+import com.moonpi.swiftnotes.kotlin.util.waitFindObject
+import java.util.EnumSet.allOf
 
 open class SwiftNotes : AbstractApplication<MainActivity>(MainActivity::class.java) {
 
@@ -25,7 +29,7 @@ open class SwiftNotes : AbstractApplication<MainActivity>(MainActivity::class.ja
         onView(withId(R.id.bodyEdit)).check(matches(withHint(R.string.title_edit_notes_activity)))
     }
 
-    fun buttonBack() {
+    fun clickButtonBack() {
         getDevice().pressBack()
     }
 
@@ -41,5 +45,29 @@ open class SwiftNotes : AbstractApplication<MainActivity>(MainActivity::class.ja
 
     fun clickButtonNo() {
         onView(withText(R.string.no_button)).perform(click())
+
+    }
+
+    fun clickMoreOptions() {
+        byContentDesc("More options").waitFindObject().click()
+    }
+
+    fun checkMainFunc() {
+        onView(withText(R.string.action_backup)).check(matches(isDisplayed()))
+        onView(withText(R.string.action_restore)).check(matches(isDisplayed()))
+        onView(withText(R.string.action_rate_app)).check(matches(isDisplayed()))
+    }
+
+    fun checkEditMenu() {
+        onView(withText(R.string.action_font_size)).check(matches(isDisplayed()))
+        onView(withText(R.string.action_hide_body)).check(matches(isDisplayed()))
+    }
+
+    fun inputTitle(title: String) {
+        onView(withId(R.id.titleEdit)).perform(replaceText(title))
+    }
+
+    fun inputNote(note: String) {
+        onView(withId(R.id.bodyEdit)).perform(replaceText(note))
     }
 }
