@@ -52,15 +52,30 @@ class SwiftNotesTest : AbstractApplicationTest<SwiftNotes>(SwiftNotes()) {
     @Test
     @DisplayName("Start case 2")
     fun case2() {
-        app.open()
-        app.clickButtonPlus()
-        app.inputTitle("Заметка1")
-        app.inputNote("Тестовая запись 1")
-        app.clickButtonBack()
-        //app.checkSaveYesOrNo()
-        //app.clickButtonYes()
+        step("На главном экране нажать ‘+’") {
+            app.open()
+            app.clickButtonPlus()
+            deviceScreenshot("Экран создания заметки")
+        }
+        step("В поле Title написать " +
+                "‘Заметка1’\n" +
+                "В теле note написать ‘Тестовая запись 1’") {
+            app.inputTitle("Заметка1")
+            app.inputNote("Тестовая запись 1")
+            deviceScreenshot("Экран создания заметки")
+        }
+        step("Нажать кнопку назад ‘<-’") {
+            app.clickButtonBack()
+            app.clickButtonBack()
+            deviceScreenshot("Сообщение. ‘Save changes?’")
+        }
+        step("Нажать кнопку ‘YES’") {
+            app.checkSaveYesOrNo()
+            app.clickButtonYes()
+            app.checkNewNote()
+            deviceScreenshot("Появилась новая запись")
+        }
     }
-
 
     @Test
     @DisplayName("Start case 3")

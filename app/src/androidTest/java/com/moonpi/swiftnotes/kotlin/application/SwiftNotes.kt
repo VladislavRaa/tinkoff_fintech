@@ -70,4 +70,8 @@ open class SwiftNotes : AbstractApplication<MainActivity>(MainActivity::class.ja
     fun inputNote(note: String) {
         onView(withId(R.id.bodyEdit)).perform(replaceText(note))
     }
+
+    fun checkNewNote(){
+        onView(withId(R.id.titleView)).check(matches(isDisplayed()))
+    }
 }
